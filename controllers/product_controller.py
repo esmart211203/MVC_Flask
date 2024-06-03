@@ -76,3 +76,10 @@ def edit_product(product_id):
         return redirect(url_for('product_bp.management_product'))
 
     return render_template('product/edit_product.html', product=product)
+
+
+@product_bp.route('/search')
+def searc_product():
+    keyword = request.args.get('keyword', '')
+    products = Product.search_products(keyword)
+    return render_template('search.html', products=products)

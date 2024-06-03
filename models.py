@@ -16,6 +16,10 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     def format_price(self):
         return '{:,.0f} VND'.format(self.price)
+    
+    def search_products(query):
+        search_pattern = f"%{query}%"
+        return Product.query.filter(Product.name.ilike(search_pattern)).all()
     @classmethod
     def create_product(cls, name, image, desc, price):
         """
