@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Edit Product{% endblock title %}
+{% block content %}
+<form method="POST" action="{{ url_for('product_bp.edit_product', product_id=product.id) }}" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" value="{{ product.name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="image">Image</label>
+        <img style="width: 50px" src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="Product Image" class="img-fluid">
+        <input type="file" class="form-control mt-2" id="image" name="image" placeholder="Upload new image">
+    </div>
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Enter product description" required>{{ product.desc }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" step="0.01" value="{{ product.price }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Update Product</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+<h1 class="text-center mt-2 mb-2">Quản lý đơn hàng</h1>
+<table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Receiver</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Total amout</th>
+        <th scope="col">Address</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for data in orders %}
+            <tr>
+                <th scope="row">{{data.id}}</th>
+                <td>{{data.receiver_name}}</td>
+                <td>{{data.phone_number}}</td>
+                <td>{{data.total_amount}} VND</td> 
+                <td>{{data.address}}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('order_bp.delete_order', order_id=data.id) }}" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>                    
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

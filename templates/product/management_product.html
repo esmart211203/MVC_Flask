@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+<h1 class="text-center mt-2 mb-2">Quản lý sản phẩm</h1>
+<table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Image</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for data in products %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{data.name}}</td>
+                <td>{{data.price}}</td>
+                <td>
+                    {% if data.image %}
+                        <img class="card-img img-fluid" style="width: 50px" src="{{ url_for('static', filename='uploads/' + data.image) }}" alt="Ảnh sản phẩm">
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('product_bp.delete_product', product_id=data.id) }}" style="display: inline-block;">
+                        <a href="{{ url_for('product_bp.edit_product', product_id=data.id) }}" class="btn btn-info btn-sm">Edit</a>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h1 class="text-center mt-2">Thêm sản phẩm</h1>
+<form method="POST" action="/add_product" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Product Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
+    </div>
+    <div class="form-group">
+        <label for="image">Image URL</label>
+        <input type="file" class="form-control" id="image" name="image" placeholder="Enter image URL">
+    </div>
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea class="form-control" id="desc" name="desc" rows="3" placeholder="Enter product description" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" step="0.01" required>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Add Product</button>
+</form>
+{% endblock content %}

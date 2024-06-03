@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h3 class="text-center mt-3 mb-3">Giỏ hàng của bạn</h3>
+<div class="row">
+    {% for product in products %}
+        <div class="col-md-3 mt-3">
+            <div class="card mb-4 shadow-sm">
+                {% if product.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                    style="height: 200px; object-fit: cover;" class="card-img-top img-fluid" alt="Product Image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.desc }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ product.format_price() }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3 class="text-center">Thanh toán</h3>
+            <form method="POST" action="{{ url_for('order_bp.checkout') }}">
+                <div class="form-group">
+                    <label for="receiver_name">Tên người nhận:</label>
+                    <input type="text" class="form-control" id="receiver_name" name="receiver_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Số điện thoại:</label>
+                    <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ:</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="total_amount">Tổng tiền cần trả: </label>
+                    <input type="text" hidden  class="form-control" name="total_amount" value="{{ total_amout_value }}">
+                    <input type="text" class="form-control" id="total_amount"  value="{{ total_amount }}" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Thanh toán</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

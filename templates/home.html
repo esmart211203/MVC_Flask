@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-3 mt-3">
+        <div class="card mb-4 shadow-sm">
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                style="height: 200px; object-fit: cover;" class="card-img-top img-fluid" alt="Product Image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.desc }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-sm btn-outline-secondary">View</a>
+                        <a href="{{url_for('user_bp.add_to_cart', product_id=product.id)}}" class="btn btn-sm btn-outline-danger">Add</a>
+                    </div>
+                    <small class="text-muted">{{ product.format_price() }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
